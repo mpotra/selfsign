@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
-# Generates your own Certificate Authority for development.
-# This script should be executed just once.
+# Generates your own Server Certificate
 
 set -e
+
+SELFSIGN_INSTALL_DIR=.
 
 CERT_DAYS=1000
 SILENT=false
@@ -64,7 +65,6 @@ echo " - silent: $SILENT"
 echo " - domain: $DOMAIN (and *.$DOMAIN)"
 echo " - output dir: $DOMAIN_PATH"
 
-SELFSIGN_INSTALL_DIR=~/.selfsign
 CA_DIR="$SELFSIGN_INSTALL_DIR/ca"
 INTERMEDIATE_DIR="$CA_DIR/intermediate"
 INTERMEDIATE_OPENSSL_CNF="$INTERMEDIATE_DIR/openssl.cnf"
@@ -87,7 +87,7 @@ fi
 
 # Verify or setup install directory
 if [ ! -d "$SELFSIGN_INSTALL_DIR" ]; then
-  echo "Install directory not found \"$SELFSIGN_INSTALL_DIR\". Please run setup first"
+  echo "Install directory not found \"$SELFSIGN_INSTALL_DIR\". Please run `selfsign-ca` first"
   exit 1
 else
   echo "Install directory \"$SELFSIGN_INSTALL_DIR\" exists"
@@ -176,13 +176,13 @@ fi
 
 if [ ! -f "$INTERMEDIATE_CERT_PEM" ]; then
   echo "Could not find CA cert \"$INTERMEDIATE_CERT_PEM\""
-  echo "Please run setup first"
+  echo "Please run `selfsign-ca` first"
   exit 1
 fi
 
 if [ ! -f "$INTERMEDIATE_KEY_PEM" ]; then
   echo "Could not find CA key \"$INTERMEDIATE_KEY_PEM\""
-  echo "Please run setup first"
+  echo "Please run `selfsign-ca` first"
   exit 1
 fi
 
@@ -262,7 +262,7 @@ else
     echo "Copied chain to fullchain"
   else
     echo "Could not find chain certificate \"$SRC_CHAIN_PEM\""
-    echo "Please run setup if you want to include it in the fullchain certificate"
+    echo "Please run `selfsign-ca` if you want to include it in the fullchain certificate"
   fi
 fi
 

@@ -39,6 +39,9 @@ Requires `openssl`
 
 ### Install using a RPM package
 
+You may install the provided `.rpm` package in the `builds` directory.
+Example: `sudo dnf install buids/selfsign-1.0-1.fc36.noarch.rpm`
+
 You may build a `.rpm` package from the sources, using the included [spec file](https://github.com/mpotra/selfsign/blob/main/selfsign.spec)
 Example: `rpmbuild -ba selfsign.spec`
 

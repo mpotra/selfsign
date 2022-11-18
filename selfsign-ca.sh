@@ -62,7 +62,7 @@ gen_intermediate_cert() {
     echo "Generating Intermediate CA private key"
     openssl genrsa -out $SETUP_CERT_PKEY_PATH 4096
 
-    chmod 400 $SETUP_CERT_PKEY_PATH
+    chmod 666 $SETUP_CERT_PKEY_PATH
     echo "Generated Intermediate CA private key"
   else
     echo "Intermediate CA private key already exists"
@@ -91,7 +91,7 @@ gen_intermediate_cert() {
           -in $SETUP_CERT_CSR_PATH \
           -out $SETUP_CERT_PEM_PATH
 
-    chmod 444 $SETUP_CERT_PEM_PATH
+    chmod 666 $SETUP_CERT_PEM_PATH
 
     echo "Generated Intermediate CA certificate"
   else
@@ -111,11 +111,11 @@ gen_chain_cert () {
       echo "Generating chain certificate"
 
       if [ -f "$SETUP_CHAIN_CERT_PEM_PATH" ]; then
-        chmod 644 $SETUP_CHAIN_CERT_PEM_PATH
+        chmod 666 $SETUP_CHAIN_CERT_PEM_PATH
       fi
       
       cat $SETUP_INTERMEDIATE_PATH $SETUP_CA_PATH > $SETUP_CHAIN_CERT_PEM_PATH
-      chmod 444 $SETUP_CHAIN_CERT_PEM_PATH
+      chmod 666 $SETUP_CHAIN_CERT_PEM_PATH
       echo "Generated chain certificate $SETUP_CHAIN_CERT_PEM_PATH"
     else
       echo "Missing Intermediate certificate"

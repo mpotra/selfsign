@@ -165,7 +165,6 @@ EOF
 if [ ! -f "$PRIVKEY_PEM" ]; then
   echo "Generating new certificate private key"
   openssl genrsa -out $PRIVKEY_PEM 2048
-  chmod 400 $PRIVKEY_PEM
   echo "Generated certificate private key"
 else
   echo "Found certificate private key"

@@ -27,7 +27,10 @@ awk -v repl="%{_sharedstatedir}/selfsign/ca/intermediate" '{gsub(/\$INSTALL_PATH
 mkdir -p $RPM_BUILD_ROOT/%{_bindir}
 install -m 0755 selfsign-dist.sh $RPM_BUILD_ROOT/%{_bindir}/selfsign
 install -m 0755 selfsign-ca-dist.sh $RPM_BUILD_ROOT/%{_bindir}/selfsign-ca
-install --directory $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign
+install --directory -m 4755 $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign
+install -m 0444 README.md $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/README.md
+install -m 0444 LICENSE $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/LICENSE
+install -m 0444 COPYRIGHT.md $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/COPYRIGHT.md
 install --directory $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca
 install --directory -m 0755 $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/certs
 install --directory $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/crl
@@ -40,7 +43,7 @@ install --directory $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/intermediate/
 install --directory $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/intermediate/csr
 install --directory $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/intermediate/newcerts
 install --directory -m 0755 $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/intermediate/private
-chmod -R 755 $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign
+# chmod -R 755 $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign
 install -m 0600 ca/openssl.cnf $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/openssl.cnf
 install -m 0600 ca/index.txt $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/index.txt
 install -m 0600 ca/serial $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsign/ca/serial
@@ -51,6 +54,11 @@ install -m 0600 ca/intermediate/serial $RPM_BUILD_ROOT/%{_sharedstatedir}/selfsi
 %files
 /%{_bindir}/selfsign
 /%{_bindir}/selfsign-ca
+/%{_sharedstatedir}/selfsign/README.md
+/%{_sharedstatedir}/selfsign/LICENSE
+/%{_sharedstatedir}/selfsign/COPYRIGHT.md
+%defattr(0666, -, -, 0777)
+%dir /%{_sharedstatedir}/selfsign/
 %dir /%{_sharedstatedir}/selfsign/ca
 %dir /%{_sharedstatedir}/selfsign/ca/certs
 %dir /%{_sharedstatedir}/selfsign/ca/private
